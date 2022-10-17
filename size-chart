@@ -114,3 +114,250 @@ Paste the following code above the Add to cart button:
 {% endif %}
 
 
+For different size chart
+
+   {
+      "type": "popup",
+      "name": "Popup",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Pop-up link text",
+          "label": "Popup"
+        },
+        {
+          "id": "page",
+          "type": "page",
+          "label": "Popup"
+        }
+      ]
+    },
+
+
+.....
+
+      {%- when 'popup' -%}
+             <div style="display:none" class="test" id="PopupModal-{{ block.id }}" {{ block.shopify_attributes }}>
+      <div class="leading-5 text-black text-16px" >
+          <strong class="block font-normal-first text-14px">Passform</strong>
+            <span class="block font-normal text-14px">Die Schuhe fallen normal aus</span>
+      </div>
+   <a  href="{{ block.settings.page.url }}" id="PopupModal-{{ block.id }}"   onclick="event.preventDefault()" class="trigger-pop-up btn">Größentabelle</a>
+</div>
+
+................................
+
+ {% assign popups = section.blocks | where: "type", "popup" %}
+  {%- for block in popups -%}
+        
+<div class="pop-up-modal"  id="PopupModal-{{ block.id }}">
+  <div class="pop-up-content">
+    <span class="close-button">&times;</span>
+    <span class="size-chart-content">
+          <div class="contentsize">
+              {{ block.settings.page.content }}
+          </div>
+        
+      
+    </span>
+  </div>
+</div>
+
+<script>
+  const modal = document.querySelector('.pop-up-modal');
+  const trigger = document.querySelector('.trigger-pop-up');
+  const closeButton = document.querySelector('.close-button');
+
+  function toggleModal() {
+    modal.classList.toggle('show-pop-up');
+  }
+
+  function windowOnClick(event) {
+    if (event.target === modal) {
+      toggleModal();
+    }
+  }
+
+  trigger.addEventListener('click', toggleModal);
+  closeButton.addEventListener('click', toggleModal);
+  window.addEventListener('click', windowOnClick);
+</script>
+    
+  {%- endfor -%}
+
+................................
+
+<style>
+.contentsize {
+    margin-top: 50px;
+    height: 450px;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 20px;
+}
+  .pop-up-modal {
+    position: fixed;
+    left: 0;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    display: none;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+  }
+.pop-up-content {
+    position: absolute;
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: auto;
+    border-radius: 0.5rem;
+    width: 80%;
+    left: 9%;
+    top: 10%;
+  
+}
+  }
+  .pop-up-content table {
+    table-layout: auto;
+  }
+  .close-button {
+    float: right;
+    /* width: 1.5rem; */
+    line-height: 1.5rem;
+    text-align: center;
+    font-size: 58px;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    /* background-color: lightgray; */
+}
+ 
+  .show-pop-up {
+    z-index: 12;
+    opacity: 1;
+    display: block;
+    transform: scale(1);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+  }
+ .trigger-pop-up {
+    margin: -17px 0 10px 0;
+    width: 100%;
+}
+.test {
+    display: flex;
+    justify-content: space-between;
+   margin-top: -20px; 
+    margin-bottom: 10px; 
+    /* text-decoration: underline; */
+    align-items: center;
+}
+.trigger-pop-up {
+  
+    text-align: right;
+    text-decoration: underline;
+}
+.leading-5.text-black.text-16px {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+span.block.font-normal.text-14px {
+    font-size: 14px;
+}
+  
+  @media only screen and (max-width: 749px) {
+    .pop-up-content,
+    .size-chart-content table {
+      width:80%;
+      text-align: justify;
+    }
+    .size-chart-content th,
+    .size-chart-content td {
+      padding: 10px;
+    }
+.contentsize {
+    margin-top: 50px;
+    height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+   overflow-x: scroll;
+    padding: 10px;
+}
+.pop-up-content {
+    position: absolute;
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: auto;
+    border-radius: 0.5rem;
+    width:90%;
+    left:4%;
+    top: 10%;
+  
+}
+span.block.font-normal.text-14px {
+    font-size: 12px;
+}
+
+    
+  }
+
+
+
+  
+  @media only screen and (min-width: 750px) {
+    .trigger-pop-up {
+      width: 50%;
+    }
+    
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
